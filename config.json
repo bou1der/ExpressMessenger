@@ -1,0 +1,13 @@
+
+[
+    {
+        "port":8000
+    }
+    ,
+    {
+        "host":"localhost",
+        "user":"root",
+        "database":"cute",
+        "password":""
+    }
+]
