@@ -4,14 +4,16 @@ import uwu2 from './resource/ó﹏ò.svg';
 import uwu3 from './resource/•‿•.svg';
 import uwu4 from './resource/•ﻌ•.svg';
 import uwu5 from './resource/,_﹏_,.svg';
+import uwu6 from './resource/UωU.svg'
+import uwu7 from './resource/_ω_.svg'
 
 import './main.css'
 import './ourStyle.css'
 
 let i = 1
 
-function Sign({}){
-
+function Sign({logining, Registers}){
+const registerValue = []
 
 
 
@@ -244,31 +246,34 @@ function Sign({}){
                 <div className={"inCard"}>
                     <aside className="register">
                         <div className="inRegister ourcard">
-                            <img src="/resource/item/UωU.svg" alt=""/>
-                            <form action="/Php/reg.php" method="POST">
+                            <img src={uwu6} alt=""/>
+                            <form>
                                 <div>
-                                    <input type="text" placeholder="Login!" name="login"/>
+                                    <input onInput={(el) => {registerValue['nickname']=el.target.value}} type="text" placeholder="Nickname!" name="login"/>
                                     <small>dont work</small>
                                 </div>
                                 <div>
-                                    <input type="password" placeholder="Password!" name="password"/>
+                                    <input onInput={(el)=>{registerValue['login']=el.target.value}} type="text" placeholder="Login!" name="login"/>
+                                    <small>dont work</small>
+                                </div>
+                                <div>
+                                    <input onInput={(el)=>{registerValue['password']=el.target.value}} type="password" placeholder="Password!" name="password"/>
                                     <small>dont work</small>
                                 </div>
                                 <div>
                                     <input type="password" placeholder="Repit-pass!" name="repitPass"/>
                                     <small>dont work</small>
                                 </div>
-                                <button id="sendReg" type="submit" name="send">Register!!</button>
                             </form>
                             <div className="label">
-                                <label htmlFor="sendReg">Register!!</label>
+                                <label style={{cursor: "pointer"}} onClick={Registers}>Register!!</label>
                                 <small>dont work</small>
                             </div>
                         </div>
                     </aside>
                     <aside className="login">
                         <div className="inLogin ourcard">
-                            <img src={"/resource/item/_ω_.svg"} alt=""/>
+                            <img src={uwu7} alt=""/>
                             <form>
                                 <div>
                                     <input type="text" placeholder="Login!" name="login"/>
@@ -279,9 +284,9 @@ function Sign({}){
                                     <small>dont work</small>
                                 </div>
                                 <input type="text" style={{opacity: "0", cursor: "default"}}/>
-                                <button id="sendLog" type="submit" name="Log">Log-in!!</button>
+
                             </form>
-                            <label htmlFor="sendLog">Log-in!!</label>
+                            <label style={{cursor:"pointer"}} onClick={logining}>Log-in!!</label>
                         </div>
                     </aside>
                     <div className="front">
