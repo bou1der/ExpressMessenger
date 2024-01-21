@@ -19,7 +19,6 @@ function Router(){
                 <Route path={"/messages"} element={<Messages/>}/>
                 <Route path={"/profile"} element={<Profile/>}/>
                 <Route path={"/news"} element={<News/>}/>
-                {/*<Redirect to={"/profile"}/>*/}
                 <Route path={"*"} element={<Navigate to={"/"}/>}/>
             </Routes>
         </BrowserRouter>
@@ -30,7 +29,6 @@ function Router(){
             <Routes>
                 <Route path={"/sign"} element={<SignUpIn/>}/>
                 <Route path={"*"} element={<Navigate to={"/sign"}/>} />
-                {/*<Redirect to={"/sign"}/>*/}
             </Routes>
           </BrowserRouter>
       )
