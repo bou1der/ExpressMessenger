@@ -249,15 +249,15 @@ const registerValue = []
                             <img src={uwu6} alt=""/>
                             <form>
                                 <div>
-                                    <input onInput={(el) => {registerValue['nickname']=el.target.value}} type="text" placeholder="Nickname!" name="login"/>
+                                    <input onInput={(el) => {registerValue[0]=el.target.value}} type="text" placeholder="Nickname!" name="login"/>
                                     <small>dont work</small>
                                 </div>
                                 <div>
-                                    <input onInput={(el)=>{registerValue['login']=el.target.value}} type="text" placeholder="Login!" name="login"/>
+                                    <input onInput={(el)=>{registerValue[1]=el.target.value}} type="text" placeholder="Login!" name="login"/>
                                     <small>dont work</small>
                                 </div>
                                 <div>
-                                    <input onInput={(el)=>{registerValue['password']=el.target.value}} type="password" placeholder="Password!" name="password"/>
+                                    <input onInput={(el)=>{registerValue[2]=el.target.value}} type="password" placeholder="Password!" name="password"/>
                                     <small>dont work</small>
                                 </div>
                                 <div>
@@ -266,7 +266,7 @@ const registerValue = []
                                 </div>
                             </form>
                             <div className="label">
-                                <label style={{cursor: "pointer"}} onClick={Registers}>Register!!</label>
+                                <label style={{cursor: "pointer"}} onClick={() => Registers(registerValue)}>Register!!</label>
                                 <small>dont work</small>
                             </div>
                         </div>

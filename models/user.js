@@ -24,7 +24,7 @@ const User = SequelizeConnect.define('users',{
 
 try{
   SequelizeConnect.authenticate();
-  console.log('Connected to db seccsess');
+  console.log('Connected to db ++');
 }catch(err){
   console.log(err)
 

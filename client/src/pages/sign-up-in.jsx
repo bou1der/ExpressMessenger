@@ -8,7 +8,9 @@ function SignPage(){
     function logining(){
     console.log("log")
     }
-    async function Registers(loginRegister,passwordRegister,nicknameRegister){
+    async function Registers(registerValue){
+        const [nicknameRegister,loginRegister,passwordRegister] = registerValue;
+        console.log(nicknameRegister,loginRegister,passwordRegister)
         await axios.post("http://localhost:8000/api/auth/register", {
             loginRegister,
             passwordRegister,

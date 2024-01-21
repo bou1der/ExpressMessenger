@@ -1,6 +1,7 @@
 
 const hashing = require('bcryptjs');
 const User = require('../models/user');
+const Token = require("../models/token-model");
 
 module.exports.login = async function register (req,res){
     res.status('200').json({
@@ -22,6 +23,8 @@ module.exports.register = async function register (req,res){
         }else{
 
                 const newUser = await User.create({nickname:nicknameRegister, login:loginRegister, password:hashpass});
+                CreateToken(newUser.dataValues.id)
+                console.log(newUser.dataValues.id)
                 res.status(201).json({
                     login:true,
                     key:"тут будет когда то ключ?",
@@ -31,4 +34,12 @@ module.exports.register = async function register (req,res){
         res.status(500).json({messege:'Ошибка регистрации',error:`${error}`,test:`${req.body}`})
     }
     
+}
+async function CreateToken(id,token) {
+
+    try{
+        const token = await Token.create({id:id,refreshToken: "dfskljfskdjfksld"})
+    }catch (err) {
+        console.log(err)
+    }
 }
