@@ -10,11 +10,13 @@ router.get('/login', jsonParser, (req,res) => {
     controllerAuth.login(req,res);
 })
 
-router.post('/register',jsonParser,[
+router.post('/register',jsonParser
+    ,[
     check("loginRegister",'Minimum of 2 characters for login').isLength({min:2}),
     check("passwordRegister",'Minimum of 8 characters for password').isLength({min:8}),
     check("nicknameRegister", 'Nickname cannot be empty')
-], async (req,res) => {
+],
+    async (req,res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         console.log(req.body)
@@ -23,8 +25,6 @@ router.post('/register',jsonParser,[
             "validationError":errors.array(),
         })
     }else{
-        const { loginRegister, passwordRegister } = req.body;
-        // здесь вы можете использовать полученные данные для регистрации пользователя
         controllerAuth.register(req,res);
     }
 })

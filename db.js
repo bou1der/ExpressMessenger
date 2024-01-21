@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const conf = require('./config.json');
 
 const connect_db = mysql.createConnection({
@@ -13,7 +13,7 @@ connect_db.connect(error => {
         console.log(error)
     }else{
         console.log(`db connected`);
-    } 
+    }
 });
 
 module.exports = connect_db;
