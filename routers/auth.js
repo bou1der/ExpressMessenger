@@ -6,7 +6,7 @@ const jsonParser = express.json();
 const {check,validationResult} = require('express-validator');
 
 
-router.get('/login', jsonParser, (req,res) => {
+router.post('/login', jsonParser, (req,res) => {
     controllerAuth.login(req,res);
 })
 
@@ -29,5 +29,8 @@ router.post('/register',jsonParser
     }
 })
 
+router.get('/refreshToken', jsonParser ,(req,res) =>{
+
+})
 
 module.exports = router;
