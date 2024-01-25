@@ -8,8 +8,7 @@ module.exports.generateToken = async function generateToken(payload){
         accessToken,refreshToken
     }
 }
-
-module.exports = async function saveToken (userId, userRefreshToken){
+module.exports.saveToken = async function saveToken (userId, userRefreshToken){
     const existToken = await Token.findOne({where:{id:userId}})
     if (existToken){
         existToken.refreshToken = userRefreshToken;
