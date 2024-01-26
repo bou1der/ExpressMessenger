@@ -5,8 +5,19 @@ import axios from "axios";
 
 function SignPage(){
     // const [data,setData] = React.useState(null)
-    function logining(){
-    console.log("log")
+    async function Logining(loginValue){
+        const [loginLogining,passwordLogining] = loginValue
+        await axios.post("http://localhost:8000/api/auth/login",{
+            login:loginLogining,
+            password:passwordLogining
+        }).then((res) => {
+            if (res.status === 200){
+                location.reload()
+            }
+            console.log(res);
+        }).catch((err)=> {console.log(err)})
+
+
     }
     async function Registers(registerValue){
         const [nicknameRegister,loginRegister,passwordRegister] = registerValue;
@@ -27,7 +38,7 @@ function SignPage(){
     }
     return(
         <div style={{width: "100%", height:"100%",display:"flex", alignItems: "center", justifyContent: "center"}}>
-             <Sign logining={logining} Registers={Registers}/>
+             <Sign Logining={Logining} Registers={Registers}/>
         </div>
     );
 }

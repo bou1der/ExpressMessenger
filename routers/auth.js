@@ -6,8 +6,21 @@ const jsonParser = express.json();
 const {check,validationResult} = require('express-validator');
 
 
-router.post('/login', jsonParser, (req,res) => {
-    controllerAuth.login(req,res);
+router.post('/login', jsonParser,[
+    check("login",'Login cannot be empty').notEmpty(),
+    check("password",'Password cannot be empty').notEmpty()
+], (req,res) => {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()){
+        return res.status(400).json({
+            message:"Error validation",
+            error:errors.array()
+        })
+    }else {
+        controllerAuth.login(req, res);
+    }
+
 })
 
 router.post('/register',jsonParser
@@ -19,10 +32,8 @@ router.post('/register',jsonParser
     async (req,res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        console.log(req.body)
-        console.log('afterValid')
         return res.status(400).json({
-            "validationError":errors.array(),
+            validationError:errors.array(),
         })
     }else{
         controllerAuth.register(req,res);

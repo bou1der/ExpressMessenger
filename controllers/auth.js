@@ -1,12 +1,38 @@
 const hashing = require('bcryptjs');
 const User = require('../models/user');
+const Token = require("../models/token-model");
 const ServiceToken = require('../services/ServiceJwtToken')
-const {cookie} = require("express-validator");
 
-module.exports.login = async function register (req,res){
-    res.status('200').json({
-        test:'login'
-    })
+
+
+module.exports.login = async function loginUser (req,res){
+    try{
+        const {login, password} = req.body;
+        const existUser = await User.findOne({where:{login:login}})
+        if (!existUser){
+            res.status(403).json({
+                result:"Пользователь не найден"
+            })
+            return;
+        }
+        const result = await hashing.compareSync(password,existUser.dataValues.password)
+        if (!result){
+            res.status(403).json({
+                result:"Неправильные данные"
+            })
+            return;
+        }
+        const refreshTok = await Token.findOne({where:{id:existUser.dataValues.id}})
+        res.cookie('refreshToken',refreshTok.dataValues.refreshToken,{httpOnly:true,maxAge: 864000000})
+        res.status(200).json({
+            reload:true
+        })
+    }catch (e){
+        console.log(e)
+        res.status(500).json({
+            result:"Ошибка обработки"
+        })
+    }
 }
 
 module.exports.register = async function register (req,res){
@@ -24,7 +50,7 @@ module.exports.register = async function register (req,res){
         const newUser = await User.create({nickname:nicknameRegister, login:loginRegister, password:hashpass});
         const JWTtokens = await ServiceToken.generateToken({id:newUser.dataValues.id, loginRegister})
         await ServiceToken.saveToken(newUser.dataValues.id,JWTtokens.refreshToken)
-        res.cookie('refreshToken', JWTtokens.refreshToken,{maxAge: 864000000} )
+        res.cookie('refreshToken', JWTtokens.refreshToken,{maxAge: 864000000, httpOnly:true} )
         res.status(201).json({
             login:true
         })
