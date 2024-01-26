@@ -12,9 +12,9 @@ import './ourStyle.css'
 
 let i = 1
 
-function Sign({logining, Registers}){
+function Sign({Logining, Registers}){
 const registerValue = []
-
+const loginingValue = []
 
 
     return (
@@ -276,17 +276,17 @@ const registerValue = []
                             <img src={uwu7} alt=""/>
                             <form>
                                 <div>
-                                    <input type="text" placeholder="Login!" name="login"/>
+                                    <input type="text" placeholder="Login!" onInput={(el) =>loginingValue[0] = el.target.value} name="login"/>
                                     <small>dont work</small>
                                 </div>
                                 <div>
-                                <input type="password" placeholder="Password!" name="password"/>
+                                <input type="password" placeholder="Password!" onInput={(el) =>loginingValue[1]= el.target.value} name="password"/>
                                     <small>dont work</small>
                                 </div>
                                 <input type="text" style={{opacity: "0", cursor: "default"}}/>
 
                             </form>
-                            <label style={{cursor:"pointer"}} onClick={logining}>Log-in!!</label>
+                            <label style={{cursor:"pointer"}} onClick={()=>Logining(loginingValue)}>Log-in!!</label>
                         </div>
                     </aside>
                     <div className="front">
