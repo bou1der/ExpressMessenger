@@ -22,8 +22,9 @@ module.exports.login = async function loginUser (req,res){
             })
             return;
         }
-        const refreshTok = await Token.findOne({where:{id:existUser.dataValues.id}})
-        res.cookie('refreshToken',refreshTok.dataValues.refreshToken,{httpOnly:true,maxAge: 864000000})
+        const JWTtokens = await ServiceToken.generateToken({id:existUser.dataValues.id,login})
+        await ServiceToken.saveToken(existUser.dataValues.id,JWTtokens.refreshToken)
+        res.cookie('refreshToken',JWTtokens.refreshToken,{httpOnly:true,maxAge: 864000000})
         res.status(200).json({
             reload:true
         })
@@ -60,13 +61,28 @@ module.exports.register = async function register (req,res){
     }
     
 }
-module.exports.refreshToken = async function refresh(req,res){
+module.exports.refreshToken = async function refresh(req,res) {
     try {
 
-    }catch(e)
-    {
-        res.status(500).json({message:'Ошибка обновления',error:`${e}`})
+    } catch (e) {
+        res.status(500).json({message: 'Ошибка обновления', error: `${e}`})
     }
+}
+
+module.exports.logout = async function logout(req,res){
+    const {refreshToken} =req.cookies
+    const token = await ServiceToken.logout(refreshToken)
+    console.log(token)
+    if (!token){
+        res.status(400).json({
+            message:"User not found"
+        })
+        return;
+    }
+    res.clearCookie()
+    res.status(200).json({
+        message:"userLogout"
+    })
 }
 
 

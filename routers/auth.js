@@ -44,4 +44,7 @@ router.get('/refreshToken', jsonParser ,(req,res) =>{
 
 })
 
+router.post('/logout', jsonParser,(req,res) =>{
+    controllerAuth.logout(req,res);
+})
 module.exports = router;

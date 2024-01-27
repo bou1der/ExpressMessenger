@@ -10,7 +10,7 @@ const TokenSchema = SequalizeConnect.define('tokenUser',{
     },
     refreshToken:{
         type:DataTypes.STRING,
-
+        allowNull:true,
     }
 })
 
