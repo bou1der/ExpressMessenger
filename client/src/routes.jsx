@@ -1,24 +1,25 @@
 import React from "react";
-import {Route,Routes, Navigate} from 'react-router-dom'
-import {BrowserRouter} from "react-router-dom";
-import {Navigation} from "./components/navbar/NavBar.jsx";
+import {Route,Routes, Navigate, BrowserRouter} from 'react-router-dom'
+import NavBar from "./pages/navbar.jsx"
 
-import Messages from "./pages/messages.jsx";
 import SignUpIn from "./pages/sign-up-in.jsx";
+
 import Profile from "./pages/profile.jsx";
 import News from "./pages/news.jsx";
-
-
+import Messages from "./pages/messages.jsx";
+import Groups from "./pages/groups.jsx"
 function Router(){
-  if (false)
+  if (true)
   {
     return(
         <BrowserRouter>
-            <Navigation/>
+            <NavBar/>
             <Routes>
                 <Route path={"/messages"} element={<Messages/>}/>
                 <Route path={"/profile"} element={<Profile/>}/>
                 <Route path={"/news"} element={<News/>}/>
+                <Route path={"/friends"} element={""}/>
+                <Route path={"/groups"} element={<Groups/>}/>
                 <Route path={"*"} element={<Navigate to={"/"}/>}/>
             </Routes>
         </BrowserRouter>
