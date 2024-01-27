@@ -51,7 +51,7 @@ module.exports.register = async function register (req,res){
         const JWTtokens = await ServiceToken.generateToken({id:newUser.dataValues.id, loginRegister})
         await ServiceToken.saveToken(newUser.dataValues.id,JWTtokens.refreshToken)
         res.cookie('refreshToken', JWTtokens.refreshToken,{maxAge: 864000000, httpOnly:true} )
-        res.status(201).json({
+        res.status(200).json({
             login:true
         })
         return;
