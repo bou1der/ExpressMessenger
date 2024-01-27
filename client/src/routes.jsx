@@ -8,8 +8,10 @@ import Profile from "./pages/profile.jsx";
 import News from "./pages/news.jsx";
 import Messages from "./pages/messages.jsx";
 import Groups from "./pages/groups.jsx"
+import Friends from "./pages/friends.jsx";
 function Router(){
-  if (true)
+
+  if (false)
   {
     return(
         <BrowserRouter>
@@ -18,7 +20,7 @@ function Router(){
                 <Route path={"/messages"} element={<Messages/>}/>
                 <Route path={"/profile"} element={<Profile/>}/>
                 <Route path={"/news"} element={<News/>}/>
-                <Route path={"/friends"} element={""}/>
+                <Route path={"/friends"} element={<Friends/>}/>
                 <Route path={"/groups"} element={<Groups/>}/>
                 <Route path={"*"} element={<Navigate to={"/"}/>}/>
             </Routes>

@@ -17,3 +17,8 @@ module.exports.saveToken = async function saveToken (userId, userRefreshToken){
     const CreateToken = await Token.create({id:userId,refreshToken: userRefreshToken})
     return CreateToken;
 }
+module.exports.logout = async function logout (refreshToken){
+    const userToken = await Token.findOne({where:{refreshToken:refreshToken}})
+    if (!userToken){return false;}
+    const logoutUser = await userToken.update({refreshToken:''})
+}
