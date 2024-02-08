@@ -22,3 +22,21 @@ module.exports.logout = async function logout (refreshToken){
     if (!userToken){return false;}
     const logoutUser = await userToken.update({refreshToken:''})
 }
+module.exports.verifyRefreshToken = async function verifyRefreshToken (token){
+    try{
+        const tokenData = await jwt.verify(token,process.env.JWT_REFRESH_SKEY);
+        return tokenData;
+    }catch (e){
+        console.log(e)
+        return null;
+    }
+}
+module.exports.verifyAccessToken = async function verifyAccessToken (token){
+    try{
+        const tokenData = await jwt.verify(token,process.env.JWT_ACCESS_SKEY);
+        return tokenData;
+    }catch (e){
+        console.log(e)
+        return null;
+    }
+}
