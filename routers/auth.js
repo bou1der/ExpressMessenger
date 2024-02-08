@@ -25,9 +25,9 @@ router.post('/login', jsonParser,[
 
 router.post('/register',jsonParser
     ,[
-    check("loginRegister",'Minimum of 2 characters for login').isLength({min:2}),
-    check("passwordRegister",'Minimum of 8 characters for password').isLength({min:8}),
-    check("nicknameRegister", 'Nickname cannot be empty')
+    check("login",'Minimum of 2 characters for login').isLength({min:2}),
+    check("password",'Minimum of 8 characters for password').isLength({min:8}),
+    check("nickname", 'Nickname cannot be empty')
 ],
     async (req,res) => {
     const errors = validationResult(req);
@@ -40,8 +40,8 @@ router.post('/register',jsonParser
     }
 })
 
-router.get('/refreshToken', jsonParser ,(req,res) =>{
-
+router.get('/refresh', jsonParser ,(req,res) =>{
+    controllerAuth.refreshToken(req,res)
 })
 
 router.post('/logout', jsonParser,(req,res) =>{

@@ -23,9 +23,9 @@ function SignPage(){
         const [nicknameRegister,loginRegister,passwordRegister] = registerValue;
         console.log(nicknameRegister,loginRegister,passwordRegister)
         await axios.post("http://localhost:8000/api/auth/register", {
-            loginRegister,
-            passwordRegister,
-            nicknameRegister
+            login:`${loginRegister}`,
+            password:`${passwordRegister}`,
+            nickname:`${nicknameRegister}`
         })
             .then((res)=>{
                 // setData(res.data);
@@ -36,6 +36,7 @@ function SignPage(){
             })
 
     }
+
     return(
         <div style={{width: "100%", height:"100%",display:"flex", alignItems: "center", justifyContent: "center"}}>
              <Sign Logining={Logining} Registers={Registers}/>
