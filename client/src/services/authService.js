@@ -7,7 +7,7 @@ const login = async (loginValue) =>{
 
     const [loginLogining,passwordLogining] = loginValue
 
-    api.post('http://localhost:8000/api/auth/login',{
+    api.post('/auth/login',{
         login:loginLogining,
         password:passwordLogining
     }).then((res) => {
