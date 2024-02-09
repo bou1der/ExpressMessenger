@@ -7,12 +7,7 @@ const login = async (loginValue) =>{
 
     const [loginLogining,passwordLogining] = loginValue
 
-    api.post('/api/auth/login',{
-        login:loginLogining,
-        password:passwordLogining
-    })
-
-    await axios.post("http://localhost:8000/api/auth/login",{
+    api.post('http://localhost:8000/api/auth/login',{
         login:loginLogining,
         password:passwordLogining
     }).then((res) => {
@@ -21,6 +16,7 @@ const login = async (loginValue) =>{
         }
         console.log(res);
     }).catch((err)=> {console.log(err)})
+
 }
 
 
