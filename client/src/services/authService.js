@@ -7,11 +7,7 @@ const login = async (loginValue) =>{
 
     const [loginLogining,passwordLogining] = loginValue
 
-<<<<<<< HEAD
-    api.post('/auth/login',{
-=======
     await api.post('/auth/login',{
->>>>>>> e9b733e
         login:loginLogining,
         password:passwordLogining
     }).then((res) => {
