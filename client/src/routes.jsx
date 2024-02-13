@@ -8,10 +8,30 @@ import News from "./pages/news.jsx";
 import Messages from "./pages/messages.jsx";
 import Groups from "./pages/groups.jsx"
 import Friends from "./pages/friends.jsx";
-function Router(){
 
-  if (false)
-  {
+import api from "./http/serviceAxios.js";
+import IndexPage from "./pages/index.jsx";
+
+const {useState,useEffect} = React
+
+function Router() {
+    const [isUserValidated, setUserValidated] = useState(false);
+
+    useEffect(() => {
+        const checkUserValidation = async () => {
+            try {
+                const response = await api.get('/content/isSignUp');
+                console.log(response)
+                setUserValidated(response.data.login);
+            } catch (error) {
+                console.log('Ошибка проверки пользователя:', error);
+            }
+        };
+
+        checkUserValidation();
+    }, []);
+
+    if (isUserValidated) {
     return(
         <BrowserRouter>
             <NavBar/>
@@ -21,6 +41,7 @@ function Router(){
                 <Route path={"/news"} element={<News/>}/>
                 <Route path={"/friends"} element={<Friends/>}/>
                 <Route path={"/groups"} element={<Groups/>}/>
+                <Route path={"/"} element={<IndexPage/>}/>
                 <Route path={"*"} element={<Navigate to={"/"}/>}/>
             </Routes>
         </BrowserRouter>

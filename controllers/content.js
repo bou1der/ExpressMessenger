@@ -20,3 +20,7 @@ module.exports.getChats = async function getChats(req,res){
 
         }})
 }
+module.exports.isSignUp = async function isSignUp(req,res,next){
+    res.status(200).json({login:true})
+
+}
