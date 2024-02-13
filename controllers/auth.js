@@ -36,6 +36,7 @@ module.exports.login = async function loginUser (req,res){
             result:"Ошибка обработки"
         })
     }
+
 }
 
 module.exports.register = async function register (req,res){
@@ -82,7 +83,7 @@ module.exports.refreshToken = async function refresh(req,res) {
         await ServiceToken.saveToken(user.dataValues.id,JWTtokens.refreshToken)
 
         res.cookie('refreshToken',JWTtokens.refreshToken,{httpOnly:true,maxAge: 864000000})
-        res.status(200).json({message: 'refreshOk'})
+        res.status(200).json({accessToken:JWTtokens.accessToken})
     } catch (e) {
         res.status(500).json({message: 'Ошибка обновления', error: `${e}`})
     }
