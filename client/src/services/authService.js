@@ -38,9 +38,24 @@ const register = async (registerValue) =>{
         {
             console.log(err);
         })
-
-
 }
 
-
-export {login, register}
+const logout = () =>{
+    api.post('/auth/logout').then(res => {
+        if(res.status === 200){
+            localStorage.removeItem('token')
+            location.reload()
+        }
+        console.log(res)
+    }).catch(err => {
+        console.log(err)
+    })
+}
+const refresh = async () =>{
+    await api.get('/auth/refresh').then(res=>{
+        console.log(res)
+    }).catch(e =>{
+        console.log(e)
+    })
+}
+export {login, register,logout,refresh}

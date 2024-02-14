@@ -91,6 +91,10 @@ module.exports.refreshToken = async function refresh(req,res) {
 
 module.exports.logout = async function logout(req,res){
     const {refreshToken} = req.cookies
+    if(!refreshToken){
+        res.status(405).json({message:"Пустой токен"})
+        return;
+    }
     if (!await Token.findOne({where:{refreshToken:refreshToken}})){
         res.status(404).json({
             message:"User not found"
