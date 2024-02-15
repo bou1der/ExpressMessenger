@@ -3,6 +3,7 @@ import api from "../http/serviceAxios.js";
 
 
 
+
 const login = async (loginValue) =>{
 
     const [loginLogining,passwordLogining] = loginValue
@@ -42,7 +43,6 @@ const logout = () =>{
             localStorage.removeItem('token')
             location.reload()
         }
-        console.log(res)
     }).catch(err => {
         console.log(err)
     })
@@ -54,4 +54,13 @@ const refresh = async () =>{
         console.log(e)
     })
 }
-export {login, register,logout,refresh}
+const checkAuth = async () =>{
+    try{
+        const res = await axios.get('http://localhost:8000/api/auth/refresh',{withCredentials:true})
+
+        localStorage.setItem('token',res.data.accessToken)
+    }catch (e){
+        console.log(e.config?.response?.message)
+    }
+}
+export {login, register,logout,refresh,checkAuth}

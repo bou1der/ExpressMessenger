@@ -1,6 +1,6 @@
 import React from "react";
 import {Route,Routes, Navigate, BrowserRouter} from 'react-router-dom'
-import NavBar from "./pages/navbar.jsx"
+
 
 import SignUpIn from "./pages/sign-up-in.jsx";
 import Profile from "./pages/profile.jsx";
@@ -8,9 +8,11 @@ import News from "./pages/news.jsx";
 import Messages from "./pages/messages.jsx";
 import Groups from "./pages/groups.jsx"
 import Friends from "./pages/friends.jsx";
+import IndexPage from "./pages/index.jsx";
+import NavBar from "./pages/navbar.jsx"
 
 import api from "./http/serviceAxios.js";
-import IndexPage from "./pages/index.jsx";
+import {checkAuth}  from "./services/authService.js"
 
 const {useState,useEffect} = React
 
@@ -20,14 +22,14 @@ function Router() {
     useEffect(() => {
         const checkUserValidation = async () => {
             try {
-                const response = await api.get('/content/isSignUp');
-                console.log(response)
-                setUserValidated(response.data.login);
+               await checkAuth()
+                if (localStorage.getItem('token')){
+                    setUserValidated(true)
+                }
             } catch (error) {
                 console.log('Ошибка проверки пользователя:', error);
             }
         };
-
         checkUserValidation();
     }, []);
 
