@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import {Route,Routes, Navigate, BrowserRouter} from 'react-router-dom'
 
 
@@ -11,20 +11,19 @@ import Friends from "./pages/friends.jsx";
 import IndexPage from "./pages/index.jsx";
 import NavBar from "./pages/navbar.jsx"
 
-import api from "./http/serviceAxios.js";
 import {checkAuth}  from "./services/authService.js"
+import routerStore from "./stores/store.js"
+import {observer} from "mobx-react-lite";
 
-const {useState,useEffect} = React
-
-function Router() {
-    const [isUserValidated, setUserValidated] = useState(false);
-
+const Router = observer(() => {
     useEffect(() => {
         const checkUserValidation = async () => {
             try {
-               await checkAuth()
+                await checkAuth()
                 if (localStorage.getItem('token')){
-                    setUserValidated(true)
+                    routerStore.setAuht(true)
+                }else {
+                    routerStore.setAuht(false)
                 }
             } catch (error) {
                 console.log('Ошибка проверки пользователя:', error);
@@ -32,8 +31,7 @@ function Router() {
         };
         checkUserValidation();
     }, []);
-
-    if (isUserValidated) {
+    if (routerStore.state) {
     return(
         <BrowserRouter>
             <NavBar/>
@@ -48,7 +46,10 @@ function Router() {
             </Routes>
         </BrowserRouter>
     )
-  }else{
+  }else if(routerStore.state === null){
+        return (<h1>Тут типа анимация загрузки</h1>)
+    }
+    else{
       return (
           <BrowserRouter>
             <Routes>
@@ -58,8 +59,5 @@ function Router() {
           </BrowserRouter>
       )
   }
-
-
-
-}
+})
 export default Router;

@@ -70,7 +70,6 @@ module.exports.refreshToken = async function refresh(req,res) {
     try {
         const {refreshToken} = req.cookies
         if (!refreshToken){return res.status(404).json({message:"Empty token"})}
-
         const userData = await ServiceToken.verifyRefreshToken(refreshToken)
         const tokenFromDb = await Token.findOne({where:{refreshToken:refreshToken}})
         if (!userData || !tokenFromDb){
