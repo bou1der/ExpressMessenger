@@ -10,27 +10,30 @@ import Groups from "./pages/groups.jsx"
 import Friends from "./pages/friends.jsx";
 import IndexPage from "./pages/index.jsx";
 import NavBar from "./pages/navbar.jsx"
+import loadingGif from "./components/sign-up-in/resource/loading.gif"
 
-import {checkAuth}  from "./services/authService.js"
+import {refresh}  from "./services/authService.js"
 import routerStore from "./stores/store.js"
 import {observer} from "mobx-react-lite";
 
+
+const checkUserValidation = async () => {
+    try {
+        await refresh()
+        if (localStorage.getItem('token')){
+            routerStore.setAuht(true)
+        }else {
+            routerStore.setAuht(false)
+        }
+    } catch (error) {
+        console.log('Ошибка проверки пользователя:', error);
+    }
+};
+
+
 const Router = observer(() => {
-    useEffect(() => {
-        const checkUserValidation = async () => {
-            try {
-                await checkAuth()
-                if (localStorage.getItem('token')){
-                    routerStore.setAuht(true)
-                }else {
-                    routerStore.setAuht(false)
-                }
-            } catch (error) {
-                console.log('Ошибка проверки пользователя:', error);
-            }
-        };
-        checkUserValidation();
-    }, []);
+
+
     if (routerStore.state) {
     return(
         <BrowserRouter>
@@ -47,7 +50,7 @@ const Router = observer(() => {
         </BrowserRouter>
     )
   }else if(routerStore.state === null){
-        return (<h1>Тут типа анимация загрузки</h1>)
+        return (<img alt={""} src={loadingGif} onLoad={() => {checkUserValidation()}}/>)
     }
     else{
       return (

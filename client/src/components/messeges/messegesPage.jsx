@@ -12,6 +12,30 @@ function UserMessages({}) {
             <article className="userMesseges">
                 {<User></User>}
                 <div className="separator"/>
+                {<User></User>}
+                <div className="separator"/>
+                {<User></User>}
+                <div className="separator"/>
+                {<User></User>}
+                <div className="separator"/>
+                {<User></User>}
+                <div className="separator"/>
+                {<User></User>}
+                <div className="separator"/>
+                {<User></User>}
+                <div className="separator"/>
+                {<User></User>}
+                <div className="separator"/>
+                {<User></User>}
+                <div className="separator"/>
+                {<User></User>}
+                <div className="separator"/>
+                {<User></User>}
+                <div className="separator"/>
+                {<User></User>}
+                <div className="separator"/>
+                {<User></User>}
+
             </article>
             <article className="blockMesseges">
                 <DialogInfo/>

@@ -42,10 +42,7 @@ html, body {
     padding-bottom: 15px;
     overflow-y: scroll;
     gap: 10px;
-}
-.userMesseges::-webkit-scrollbar
-{
-    width: 0px;
+    scrollbar-width: none;
 }
 .user
 {
@@ -271,6 +268,7 @@ overflow: hidden;
     overflow-y: scroll;
     padding-top: 10px;
     padding-bottom: 25px;
+    scrollbar-width: none;
 }
 .messegesBlock::-webkit-scrollbar
 {

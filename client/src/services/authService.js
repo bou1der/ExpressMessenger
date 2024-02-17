@@ -1,7 +1,7 @@
 import axios from "axios";
 import api from "../http/serviceAxios.js";
-
-
+import routerStore from "../stores/store.js";
+import WebSock from "./webSock.js"
 
 
 const login = async (loginValue) =>{
@@ -12,8 +12,9 @@ const login = async (loginValue) =>{
         login:loginLogining,
         password:passwordLogining
     }).then((res) => {
-        if (res.status === 200){
-            location.reload()
+        if (res.status === 200) {
+            routerStore.setAuht(true)
+            WebSock.connectSock()
         }
         console.log(res);
     }).catch((err)=> {console.log(err)})
@@ -27,9 +28,10 @@ const register = async (registerValue) =>{
         nickname:`${nicknameRegister}`
     }).then((res)=>{
         // setData(res.data);
-        console.log(res.data)
+        console.log(res)
         if (res.status === 200){
-            location.reload()
+            routerStore.setAuht(true)
+            WebSock.connectSock()
         }
     }).catch((err)=>
         {
@@ -41,26 +43,20 @@ const logout = () =>{
     api.post('/auth/logout').then(res => {
         if(res.status === 200){
             localStorage.removeItem('token')
-            location.reload()
+            routerStore.setAuht(false)
+            WebSock.closeSock()
         }
     }).catch(err => {
         console.log(err)
     })
 }
 const refresh = async () =>{
-    await api.get('/auth/refresh').then(res=>{
-        console.log(res)
-    }).catch(e =>{
-        console.log(e)
-    })
-}
-const checkAuth = async () =>{
     try{
         const res = await axios.get('http://localhost:8000/api/auth/refresh',{withCredentials:true})
-
         localStorage.setItem('token',res.data.accessToken)
+        WebSock.connectSock()
     }catch (e){
         console.log(e.config?.response?.message)
     }
 }
-export {login, register,logout,refresh,checkAuth}
+export {login, register,logout,refresh}
