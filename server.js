@@ -4,6 +4,7 @@ const content = require('./routers/content')
 const cookieParser = require('cookie-parser')
 const app = express();
 const cors = require('cors')
+const WebSock = require('./webSocketServer/webSocket')
 
 const authMiddleware = require('./middlewares/authMiddleware')
 

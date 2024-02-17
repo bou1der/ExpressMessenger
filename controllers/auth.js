@@ -27,7 +27,6 @@ module.exports.login = async function loginUser (req,res){
         // res.json({JWTtokens})
         res.cookie('refreshToken',JWTtokens.refreshToken,{httpOnly:true,maxAge: 864000000})
         res.status(200).json({
-            reload:true,
             JWTtokens
         })
     }catch (e){
@@ -57,7 +56,7 @@ module.exports.register = async function register (req,res){
         await ServiceToken.saveToken(newUser.dataValues.id,JWTtokens.refreshToken)
         res.cookie('refreshToken', JWTtokens.refreshToken,{maxAge: 864000000, httpOnly:true} )
         res.status(200).json({
-            login:true
+            JWTtokens
         })
         return;
     }catch(error){
