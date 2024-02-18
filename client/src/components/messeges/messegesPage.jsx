@@ -4,9 +4,12 @@ import SendMessageButtonSrc from  './resource/send_messege.svg'
 import SendFilesButtonSrc from './resource/send_files.svg'
 import DialogInfo from "./dialogInfo.jsx";
 
+//services
+import {sendMessage} from "../../services/messagesService.js";
+// services
 
 function UserMessages({}) {
-
+    const [txtMessage,setTxtMessage] = React.useState('')
     return(
         <div className="content">
             <article className="userMesseges">
@@ -68,8 +71,11 @@ function UserMessages({}) {
                 <span className="typeMessege">
 
                 <button><img src={SendFilesButtonSrc} alt=""/></button>
-                <div className="inputMessenge"><textarea placeholder="Write a messege......"></textarea></div>
-                <button><img src={SendMessageButtonSrc} alt=""/></button>
+                <div className="inputMessenge"><textarea value={txtMessage} onChange={(el) =>{
+                    setTxtMessage(el.target.value)}} placeholder="Write a messege......"></textarea></div>
+                <button onClick={() =>{
+                    sendMessage(txtMessage)
+                }}><img src={SendMessageButtonSrc}  alt=""/></button>
             </span>
             </article>
         </div>

@@ -9,10 +9,11 @@ const WebSocServ = new Server({ port: 8080 }, () => {
 const clients = new Map()
 WebSocServ.on('connection', (ws) => {
     eventsService.connection(ws);
+    console.log(ws._socket.remoteAddress)
     clients.set(ws._socket.remoteAddress, ws);
 
     ws.on('message', (message) => {
-        console.log("Received message: ", message);
+        console.log("Received message: ", message.toString());
     });
 
     ws.on('close', () => {
