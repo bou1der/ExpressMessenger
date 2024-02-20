@@ -1,6 +1,6 @@
 
-module.exports.connection = Connection = (ws,data) =>{
+module.exports.connection = Connection = (io,data) =>{
 
     // ws.send('AAAAAAAAAAAAAAAAAAAAA ПОДКЛЮЧЕНИЕ ААААААААААААА')
-    console.log("---------------------Клиент подключился---------------------")
+        console.log("---------------------Клиент подключился---------------------")
 }

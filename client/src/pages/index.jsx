@@ -1,5 +1,6 @@
 import React from "react";
 import {logout} from "../services/authService.js"
+import socketIo from "socket.io-client";
 function IndexPage(){
 
     return(

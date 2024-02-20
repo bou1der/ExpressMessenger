@@ -1,14 +1,19 @@
+import socketIo from "socket.io-client"
 class User{
     ws;
     constructor(){
     }
 
     connectSock (){
-        this.ws = new WebSocket("ws://localhost:8080")
+        this.ws = socketIo.connect("http://localhost:8000")
+        this.ws.onmessage = (mess) =>{
+            console.log(mess)
+        }
         console.log(this.ws)
     }
-    async closeSock (){
-        this.ws.close()
+    sendMessage
+    closeSock (){
+        this.ws.emit('disconnect',console.log("?"))
     }
 }
 
