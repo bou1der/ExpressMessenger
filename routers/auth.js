@@ -24,7 +24,8 @@ router.post('/login', jsonParser,[
 })
 
 router.post('/register',jsonParser
-    ,[
+,
+[
     check("login",'Minimum of 2 characters for login').isLength({min:2}),
     check("password",'Minimum of 8 characters for password').isLength({min:8}),
     check("nickname", 'Nickname cannot be empty')

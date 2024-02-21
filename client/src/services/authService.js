@@ -53,8 +53,11 @@ const logout = () =>{
 const refresh = async () =>{
     try{
         const res = await axios.get('http://localhost:8000/api/auth/refresh',{withCredentials:true})
+        if(res.status === 200){
+            WebSock.connectSock()
+        }
         localStorage.setItem('token',res.data.accessToken)
-        WebSock.connectSock()
+   
     }catch (e){
         console.log(e.config?.response?.message)
     }

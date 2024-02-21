@@ -6,15 +6,14 @@ class User{
 
     connectSock (){
         this.ws = socketIo.connect("http://localhost:8000")
-        this.ws.onmessage = (mess) =>{
+        this.ws.on('message',(mess) =>{
             console.log(mess)
-        }
+        })
         console.log(this.ws)
     }
-    sendMessage
     closeSock (){
-        this.ws.emit('disconnect',console.log("?"))
+        this.ws.emit('end',console.log("Close connection with WebSocket"))
     }
 }
 
-export default new User()
+export default new User() 

@@ -6,38 +6,38 @@ import DialogInfo from "./dialogInfo.jsx";
 
 //services
 import {sendMessage} from "../../services/messagesService.js";
+import {getChats} from "../../services/GenerateContentService.js";
+import api from "../../http/serviceAxios.js";
 // services
 
 function UserMessages({}) {
     const [txtMessage,setTxtMessage] = React.useState('')
-    return(
+    const [users, setUsers] = React.useState(undefined)
+
+    React.useEffect( () => {
+        const fetchData = async () => {
+            const res = await getChats()
+            if (res.status === 200) {
+                setUsers(res.data)
+            }
+        }
+        fetchData()
+    }, [])
+
+    return (
         <div className="content">
             <article className="userMesseges">
-                {<User></User>}
-                <div className="separator"/>
-                {<User></User>}
-                <div className="separator"/>
-                {<User></User>}
-                <div className="separator"/>
-                {<User></User>}
-                <div className="separator"/>
-                {<User></User>}
-                <div className="separator"/>
-                {<User></User>}
-                <div className="separator"/>
-                {<User></User>}
-                <div className="separator"/>
-                {<User></User>}
-                <div className="separator"/>
-                {<User></User>}
-                <div className="separator"/>
-                {<User></User>}
-                <div className="separator"/>
-                {<User></User>}
-                <div className="separator"/>
-                {<User></User>}
-                <div className="separator"/>
-                {<User></User>}
+                {users &&
+                    users.map((user) => {
+                        return (
+                            <>
+                            <User key={user.id} nickname={user.nickname}/>
+                            <div className={"separator"}></div>
+                            </>
+                        )
+                    })
+                }
+
 
             </article>
             <article className="blockMesseges">
@@ -79,6 +79,7 @@ function UserMessages({}) {
             </span>
             </article>
         </div>
+
     );
 }
 
