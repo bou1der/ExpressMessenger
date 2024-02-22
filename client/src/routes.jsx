@@ -5,7 +5,8 @@ import {Route,Routes, Navigate, BrowserRouter} from 'react-router-dom'
 import SignUpIn from "./pages/sign-up-in.jsx";
 import Profile from "./pages/profile.jsx";
 import News from "./pages/news.jsx";
-import Messages from "./pages/messages.jsx";
+// import Messages from "./pages/messages.jsx";
+import Messages from './components/messeges/messegesPage.jsx'
 import Groups from "./pages/groups.jsx"
 import Friends from "./pages/friends.jsx";
 import IndexPage from "./pages/index.jsx";

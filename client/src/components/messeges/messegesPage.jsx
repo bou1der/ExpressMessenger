@@ -1,17 +1,19 @@
 import React from "react";
 import User from './userInMessageList.jsx'
-import SendMessageButtonSrc from  './resource/send_messege.svg'
-import SendFilesButtonSrc from './resource/send_files.svg'
-import DialogInfo from "./dialogInfo.jsx";
+import MessagesBlock from "./messagesBlock.jsx"
+import './messegesPage.css'
+import {observer} from "mobx-react-lite";
 
+import {v4 as uuidv4} from 'uuid'
 //services
 import {sendMessage} from "../../services/messagesService.js";
-import {getChats} from "../../services/GenerateContentService.js";
-import api from "../../http/serviceAxios.js";
+import {getChats,getMessages} from "../../services/GenerateContentService.js";
+import messagesStore from "../../stores/MessagesStore.js"
+
 // services
 
-function UserMessages({}) {
-    const [txtMessage,setTxtMessage] = React.useState('')
+const UserMessages = observer(() => {
+
     const [users, setUsers] = React.useState(undefined)
 
     React.useEffect( () => {
@@ -19,7 +21,9 @@ function UserMessages({}) {
             const res = await getChats()
             if (res.status === 200) {
                 setUsers(res.data)
+                return;
             }
+
         }
         fetchData()
     }, [])
@@ -31,56 +35,23 @@ function UserMessages({}) {
                     users.map((user) => {
                         return (
                             <>
-                            <User key={user.id} nickname={user.nickname}/>
-                            <div className={"separator"}></div>
+                                <User key={user.id}  id={user.id} nickname={user.nickname} getMessages={getMessages}/>
+                                <div key={uuidv4()} className={"separator"}></div>
                             </>
                         )
                     })
                 }
-
-
             </article>
             <article className="blockMesseges">
-                <DialogInfo/>
+                {messagesStore.Selected ?
+                    messagesStore.loadState? <MessagesBlock sendMessage={sendMessage} messages={messagesStore.messages} nickname={messagesStore.name}/> : <div>Анимация загрузки</div>
 
-                <div className="messegesBlock">
-                    <div className="message sender_other">
-                        <div><img src="../../resource/small_messege_avatar.svg" alt=""/></div>
-                        <p>dadaasdasdasdasdakshdgaksujghdjhgaksdsdasdasdasdoujasygdkahsgdhagsd</p></div>
-                    <div className="message sender_me">
-                        <div><img src="../../resource/small_messege_avatar.svg" alt=""/></div>
-                        <p>21341237461238764817263487612378461238764786123487612347861238746231876</p></div>
-                    <div className="message sender_other">
-                        <div><img src="../../resource/small_messege_avatar.svg" alt=""/></div>
-                        <p>dadaasdasdasdasdakshdgaksujghdjhgaksdsdasdasdasdoujasygdkahsgdhagsd</p>
-                    </div>
-                    <div className="message sender_other">
-                        <div><img src="../../resource/small_messege_avatar.svg" alt=""/></div>
-                        <p>dadaasdasdasdasdakshdgaksujghdjhgaksdsdasdasdasdoujasygdkahsgdhagsd</p></div>
-                    <div className="message sender_me">
-                        <div><img src="../../resource/small_messege_avatar.svg" alt=""/></div>
-                        <p>21341237461238764817263487612378461238764786123487612347861238746231876</p></div>
-                    <div className="message sender_me">
-                        <div><img src="../../resource/small_messege_avatar.svg" alt=""/></div>
-                        <p>21341237461238764817263487612378461238764786123487612347861238746231876</p></div>
-                    <div className="message sender_me">
-                        <div><img src="../../resource/small_messege_avatar.svg" alt=""/></div>
-                        <p>21341237461238764817263487612378461238764786123487612347861238746231876</p></div>
-                </div>
-
-                <span className="typeMessege">
-
-                <button><img src={SendFilesButtonSrc} alt=""/></button>
-                <div className="inputMessenge"><textarea value={txtMessage} onChange={(el) =>{
-                    setTxtMessage(el.target.value)}} placeholder="Write a messege......"></textarea></div>
-                <button onClick={() =>{
-                    sendMessage(txtMessage)
-                }}><img src={SendMessageButtonSrc}  alt=""/></button>
-            </span>
+                    :
+                    <h1>Выберите диалог</h1>}
             </article>
         </div>
 
     );
-}
+})
 
 export default UserMessages

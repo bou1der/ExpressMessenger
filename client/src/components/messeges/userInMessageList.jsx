@@ -1,8 +1,8 @@
 import React from "react";
 import userLogo from './resource/user_logo.svg'
-export const User = ({nickname}) =>{
+export const User = ({id,nickname,getMessages}) =>{
     return(
-        <div className="user">
+        <div className="user" onClick={() =>{getMessages(id,nickname)}}>
             <img src={userLogo} alt=""/>
                 <div className="user_info">
                     <h3>{nickname}</h3>

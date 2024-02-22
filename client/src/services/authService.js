@@ -56,6 +56,7 @@ const refresh = async () =>{
         if(res.status === 200){
             WebSock.connectSock()
         }
+        console.log(res)
         localStorage.setItem('token',res.data.accessToken)
    
     }catch (e){

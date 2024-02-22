@@ -14,12 +14,16 @@ api.interceptors.response.use(async(config) =>{
     if (config.config.url === "/auth/register" || config.config.url === "/auth/login" || config.config.url === "/auth/refresh"){
         localStorage.setItem("token", config.data.JWTtokens.accessToken)
     }
-    if (config.status === 402){
 
-        await refresh()
-    }
 
     return config;
+}, async function (error) {
+
+    if (error.response.status === 402 || error.response.status === 405){
+        console.log(error.response.status)
+        await refresh()
+    }
+    return error;
 })
 
 export default api;
