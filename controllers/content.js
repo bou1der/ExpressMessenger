@@ -5,7 +5,7 @@ module.exports.getChats = async function getChats(req,res){
     AllUsers.map((el)=>{
         users.push(el.dataValues)
     })
-    res.status(200).json(users)
+    res.status(200).json([users,req.user.id])
 }
 module.exports.getMessages = async (req,res)=>{
     res.status(200).json([

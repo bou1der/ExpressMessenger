@@ -18,7 +18,16 @@ function messagesBlock({sendMessage,nickname,messages}){
                     <div><img src="../../resource/small_messege_avatar.svg" alt=""/></div>
                     <p>21341237461238764817263487612378461238764786123487612347861238746231876</p>
                 </div>
-                {messages.data.map((message)=>{console.log(message)})}
+                {
+                    messages.data.map((message)=>{return(
+                        <>
+                            <div className={"message sender_me"}>
+                                <div><img src={"#"} alt={''}/></div>
+                                <p>{message.message.text}</p>
+                            </div>
+                        </>
+                    )})
+                }
             </div>
 
             <span className="typeMessege">

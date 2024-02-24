@@ -15,12 +15,13 @@ import messagesStore from "../../stores/MessagesStore.js"
 const UserMessages = observer(() => {
 
     const [users, setUsers] = React.useState(undefined)
-
+    let id;
     React.useEffect( () => {
         const fetchData = async () => {
             const res = await getChats()
             if (res.status === 200) {
-                setUsers(res.data)
+                setUsers(res.data[0])
+                id = res.data[1]
                 return;
             }
 
