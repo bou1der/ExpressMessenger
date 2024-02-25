@@ -3,25 +3,17 @@ import DialogInfo from "./dialogInfo.jsx";
 import SendFilesButtonSrc from "./resource/send_files.svg";
 import SendMessageButtonSrc from "./resource/send_messege.svg";
 
-function messagesBlock({sendMessage,nickname,messages}){
+function messagesBlock({yourId,sendMessage,nickname,messages}){
     const [txtMessage,setTxtMessage] = React.useState('')
     return(
         <>
             <DialogInfo nickname={nickname}/>
 
             <div className="messegesBlock">
-                <div className="message sender_other">
-                    <div><img src="../../resource/small_messege_avatar.svg" alt=""/></div>
-                    <p>dadaasdasdasdasdakshdgaksujghdjhgaksdsdasdasdasdoujasygdkahsgdhagsd</p>
-                </div>
-                <div className="message sender_me">
-                    <div><img src="../../resource/small_messege_avatar.svg" alt=""/></div>
-                    <p>21341237461238764817263487612378461238764786123487612347861238746231876</p>
-                </div>
-                {
+                {messages.data &&
                     messages.data.map((message)=>{return(
                         <>
-                            <div className={"message sender_me"}>
+                            <div className={`message ${`${yourId}` === message.message.from ? `sender_me` : 'sender_other'}`}>
                                 <div><img src={"#"} alt={''}/></div>
                                 <p>{message.message.text}</p>
                             </div>

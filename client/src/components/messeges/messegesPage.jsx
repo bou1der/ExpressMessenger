@@ -15,20 +15,19 @@ import messagesStore from "../../stores/MessagesStore.js"
 const UserMessages = observer(() => {
 
     const [users, setUsers] = React.useState(undefined)
-    let id;
+    const [id,setId] =React.useState(undefined)
     React.useEffect( () => {
         const fetchData = async () => {
             const res = await getChats()
             if (res.status === 200) {
                 setUsers(res.data[0])
-                id = res.data[1]
+                setId(res.data[1])
                 return;
             }
 
         }
         fetchData()
     }, [])
-
     return (
         <div className="content">
             <article className="userMesseges">
@@ -45,7 +44,7 @@ const UserMessages = observer(() => {
             </article>
             <article className="blockMesseges">
                 {messagesStore.Selected ?
-                    messagesStore.loadState? <MessagesBlock sendMessage={sendMessage} messages={messagesStore.messages} nickname={messagesStore.name}/> : <div>Анимация загрузки</div>
+                    messagesStore.loadState? <MessagesBlock yourId={id} sendMessage={sendMessage} messages={messagesStore.messages} nickname={messagesStore.name}/> : <div>Анимация загрузки</div>
 
                     :
                     <h1>Выберите диалог</h1>}
