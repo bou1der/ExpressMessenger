@@ -16,6 +16,7 @@ const UserMessages = observer(() => {
 
     const [users, setUsers] = React.useState(undefined)
     const [id,setId] =React.useState(undefined)
+    const [messages, setMessages] = React.useState([])
     React.useEffect( () => {
         const fetchData = async () => {
             const res = await getChats()
@@ -35,7 +36,7 @@ const UserMessages = observer(() => {
                     users.map((user) => {
                         return (
                             <>
-                                <User key={user.id}  id={user.id} nickname={user.nickname} getMessages={getMessages}/>
+                                <User key={user.id}  id={user.id} nickname={user.nickname} setMessages={setMessages} getMessages={getMessages}/>
                                 <div key={uuidv4()} className={"separator"}></div>
                             </>
                         )
@@ -44,7 +45,7 @@ const UserMessages = observer(() => {
             </article>
             <article className="blockMesseges">
                 {messagesStore.Selected ?
-                    messagesStore.loadState? <MessagesBlock yourId={id} sendMessage={sendMessage} messages={messagesStore.messages} nickname={messagesStore.name}/> : <div>Анимация загрузки</div>
+                    messagesStore.loadState? <MessagesBlock yourId={id} sendMessage={sendMessage} messages={messages} setMessages={setMessages} nickname={messagesStore.name}/> : <div>Анимация загрузки</div>
 
                     :
                     <h1>Выберите диалог</h1>}

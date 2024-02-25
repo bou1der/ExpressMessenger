@@ -9,7 +9,7 @@ const getChats = async () =>{
 
     return res;
 }
-const getMessages = async (userId,nickname) =>{
+const getMessages = async (userId,nickname,setMessages) =>{
     if (messagesStore.id === userId){
         messagesStore.isSelected(false)
         return;
@@ -23,7 +23,7 @@ const getMessages = async (userId,nickname) =>{
     if (!res.status === 200){
         return
     }
-    messagesStore.messages = res
     messagesStore.setLoadState(true)
+    setMessages(res.data)
 }
 export {getChats,getMessages}
