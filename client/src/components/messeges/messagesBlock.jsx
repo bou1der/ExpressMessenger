@@ -3,13 +3,14 @@ import DialogInfo from "./dialogInfo.jsx";
 import SendFilesButtonSrc from "./resource/send_files.svg";
 import SendMessageButtonSrc from "./resource/send_messege.svg";
 
+import MessagesStore from '../../stores/MessagesStore.js';
+
 function messagesBlock({yourId,sendMessage,nickname,messages,setMessages}){
     const [txtMessage,setTxtMessage] = React.useState('')
     // const [messages,setMessages] = React.useState([])
     // React.useEffect(()=>{
     //     setMessages(messageReq.data)
     // },[])
-    console.log(messages)
     return(
         <>
             <DialogInfo nickname={nickname}/>
@@ -17,11 +18,11 @@ function messagesBlock({yourId,sendMessage,nickname,messages,setMessages}){
             <div className="messegesBlock">
                 {messages &&
 
-                    messages.map((message)=>{return(
+                    messages.map((el)=>{return(
                         <>
-                            <div className={`message ${`${yourId}` === message.message.from ? `sender_me` : 'sender_other'}`}>
+                            <div className={`message ${yourId === Number(el.message.from) ? 'sender_me' : 'sender_other'}`}>
                                 <div><img src={"#"} alt={''}/></div>
-                                <p>{message.message.text}</p>
+                                <p>{el.message.text}</p>
                             </div>
                         </>
                     )})
@@ -34,9 +35,7 @@ function messagesBlock({yourId,sendMessage,nickname,messages,setMessages}){
                 <div className="inputMessenge"><textarea value={txtMessage} onChange={(el) =>{
                     setTxtMessage(el.target.value)}} placeholder="Write a messege......"></textarea></div>
                 <button onClick={() =>{
-                    sendMessage(setMessages,messages,txtMessage)
-
-                    console.log
+                    sendMessage(setMessages,messages,txtMessage,yourId,MessagesStore.id)
                 }}><img src={SendMessageButtonSrc}  alt=""/></button>
             </span>
         </>

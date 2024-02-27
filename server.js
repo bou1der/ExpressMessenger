@@ -17,7 +17,7 @@ app.use(cors({
 
 
 
-
+ 
 app.use(cookieParser())
 app.use('/api/auth', auht)
 app.use('/api/content',authMiddleware.checkAuth, content)
