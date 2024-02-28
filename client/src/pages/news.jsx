@@ -1,7 +1,9 @@
 import React from "react";
+import NewsPage from "../components/news";
+
 function News(){
     return(
-        <div><h1>NewsPageComponent</h1></div>
+        <NewsPage/>
     );
 }
 

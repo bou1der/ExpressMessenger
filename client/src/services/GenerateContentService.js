@@ -23,7 +23,7 @@ const getMessages = async (userId,nickname,setMessages) =>{
     if (!res.status === 200){
         return
     }
-    messagesStore.setLoadState(true)
     setMessages(res.data)
+    messagesStore.setLoadState(true)
 }
 export {getChats,getMessages}
