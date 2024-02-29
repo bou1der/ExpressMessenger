@@ -20,9 +20,9 @@ function messagesBlock({yourId,sendMessage,nickname,messages,setMessages}){
 
                     messages.map((el)=>{return(
                         <>
-                            <div className={`message ${yourId === Number(el.message.from) ? 'sender_me' : 'sender_other'}`}>
+                            <div className={`message ${yourId === Number(el.from) ? 'sender_me' : 'sender_other'}`}>
                                 <div><img src={"#"} alt={''}/></div>
-                                <p>{el.message.text}</p>
+                                <p>{el.text}</p>
                             </div>
                         </>
                     )})

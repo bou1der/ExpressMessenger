@@ -1,10 +1,10 @@
 const Users = require('../models/user')
 const Chats = require('../models/chats')
+const Messages = require('../models/messages-model')
 const {QueryTypes, Sequelize, Op} = require('sequelize')
 // const User = require("../client/src/components/messeges/userInMessageList");
 
 module.exports.getChats = async function getChats(req,res){
-    const AllUsers = await Users.findAll()
     const arr = [];
     const chat = await Chats.findAll({
         where: Sequelize.literal(`JSON_CONTAINS(json_unquote(json_extract(users, '$.usersId')), '${req.user.id}')`),
@@ -24,30 +24,27 @@ module.exports.getChats = async function getChats(req,res){
                 arr[i].nickname = "Anonymous group"
             }
         }
-
-
-
     });
-    console.log(arr)
-    if (!chat){
-        res.status(404).json({chats:false})
+    if (!arr.length){
+        res.status(404).json({chats:"none"})
         return
     }
-    const users = []
-    AllUsers.map((el)=>{
-        users.push(el.dataValues)
-    })
-    res.status(200).json([users,req.user.id])
+    res.status(200).json([arr,req.user.id])
 }
 module.exports.getMessages = async (req,res)=>{
-
-    res.status(200).json([
-        {message:{id:1,chatid:12,text:"test",from:"3",to:"1"}}
-        ,{message:{id:2,chatid:12,text:"test2",from:"3",to:"1"}}
-        ,{message:{id:3,chatid:12,text:"test3",from:"3",to:"1"}}
-        ,{message:{id:3,chatid:12,text:"test3",from:"3",to:"1"}}
-        ,{message:{id:3,chatid:12,text:"test3",from:"1",to:"1"}}
-        ,{message:{id:3,chatid:12,text:"test3",from:"2",to:"2"}}
-    ])
+    const {chatId} = req.body
+    const ChatMessages = await Messages.findAll({where:{chatId}})
+    const messages = ChatMessages.map(mess =>{
+        return({
+            id:mess.dataValues.messageId,
+            chatid:mess.dataValues.chatId,
+            text:mess.dataValues.text,
+            from:mess.dataValues.fromUser,
+            to:mess.dataValues.toUser,
+            sendTime:mess.dataValues.sendTime
+        })
+    })
+    console.log(messages)
+    res.status(200).json(messages)
 
 }

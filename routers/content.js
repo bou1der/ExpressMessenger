@@ -1,11 +1,12 @@
 const express = require('express')
 const router = express.Router();
+const jsonParser = express.json()
 const controllContent = require('../controllers/content')
 
 router.get('/getchats',(req,res) => {
     controllContent.getChats(req,res)
 })
-router.get('/messages',(req,res) =>{
+router.post('/messages', jsonParser,(req,res) =>{
     controllContent.getMessages(req,res)
 })
 

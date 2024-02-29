@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Фев 27 2024 г., 20:48
+-- Время создания: Фев 29 2024 г., 00:33
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -40,7 +40,8 @@ CREATE TABLE `activity` (
 --
 
 INSERT INTO `activity` (`id`, `SocketId`, `isActive`, `createdAt`, `updatedAt`) VALUES
-(15, NULL, 0, '', 0);
+(15, NULL, 0, '', 0),
+(16, NULL, 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -49,8 +50,10 @@ INSERT INTO `activity` (`id`, `SocketId`, `isActive`, `createdAt`, `updatedAt`) 
 --
 
 CREATE TABLE `chats` (
-  `id` int(11) NOT NULL,
+  `chatid` int(11) NOT NULL,
+  `name` text DEFAULT NULL,
   `users` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`users`)),
+  `isGroup` tinyint(1) NOT NULL,
   `createdAt` text DEFAULT NULL,
   `updatedAt` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -59,9 +62,9 @@ CREATE TABLE `chats` (
 -- Дамп данных таблицы `chats`
 --
 
-INSERT INTO `chats` (`id`, `users`, `createdAt`, `updatedAt`) VALUES
-(1, '{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}', NULL, NULL),
-(2, '{\"users\":\"[1,2,3,4,5]\"}', NULL, NULL);
+INSERT INTO `chats` (`chatid`, `name`, `users`, `isGroup`, `createdAt`, `updatedAt`) VALUES
+(2, 'ThisPartySucks', '{\"usersId\":\"[1,2,3,4,5]\"}', 1, NULL, NULL),
+(3, NULL, '{\"usersId\":\"[2,13]\"}', 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -82,7 +85,7 @@ CREATE TABLE `tokenusers` (
 
 INSERT INTO `tokenusers` (`id`, `refreshToken`, `createdAt`, `updatedAt`) VALUES
 (1, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibG9naW4iOiJ1bmRlZmluZWQiLCJpYXQiOjE3MDc4MjE5OTEsImV4cCI6MTcwODY4NTk5MX0.7W9W10igCGRMCMbReUjP9u6brgcXdwOXwaTHGzQQj1s', '2024-02-13 10:59:51', '2024-02-13 10:59:51'),
-(2, '', '2024-02-13 11:05:37', '2024-02-27 18:10:29'),
+(2, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibG9naW4iOiIxMiIsImlhdCI6MTcwOTE1MTg0OCwiZXhwIjoxNzEwMDE1ODQ4fQ.dR7qM0G65wn3R_zRNN-17UgiIJ0cCtncIPSN0w8XOOg', '2024-02-13 11:05:37', '2024-02-28 20:24:08'),
 (3, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibG9naW4iOiIxMjMiLCJpYXQiOjE3MDc4MjIzOTYsImV4cCI6MTcwODY4NjM5Nn0.nsTAalMhUme_zG6cGngrE4K4IdDz-hK4H4hHnNMu-Kc', '2024-02-13 11:06:36', '2024-02-13 11:06:36'),
 (4, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibG9naW4iOiJib3VsZGVyIiwiaWF0IjoxNzA4NDYxMDY2LCJleHAiOjE3MDkzMjUwNjZ9.pCAbbpeZA3NldxAV8bZ2F1RJnz_zfob0xApVb0cSve4', '2024-02-15 19:33:57', '2024-02-20 20:31:06'),
 (5, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwibG9naW4iOiIxMjM0IiwiaWF0IjoxNzA4MTkzMzYxLCJleHAiOjE3MDkwNTczNjF9.DBzDJnZftnYjwB66wlB2GKhAmkoM8vWVvMUUEnKIJuo', '2024-02-17 18:09:21', '2024-02-17 18:09:21'),
@@ -95,7 +98,8 @@ INSERT INTO `tokenusers` (`id`, `refreshToken`, `createdAt`, `updatedAt`) VALUES
 (12, '', '2024-02-21 21:02:26', '2024-02-21 21:02:31'),
 (13, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImxvZ2luIjoiMTIzMSIsImlhdCI6MTcwOTA1Njk3NCwiZXhwIjoxNzA5OTIwOTc0fQ.QMOPxzu_H07gJJ8oV0jrEvVmrHTjksHdVJ-nySOix3c', '2024-02-27 18:02:54', '2024-02-27 18:02:54'),
 (14, '', '2024-02-27 18:10:40', '2024-02-27 18:31:26'),
-(15, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImxvZ2luIjoiMTIxMiIsImlhdCI6MTcwOTA2MjMwNiwiZXhwIjoxNzA5OTI2MzA2fQ.PLDKmeLKZ3rNgKVXd-5RPT9PLVPWzbHVafYdtbgsics', '2024-02-27 18:31:36', '2024-02-27 19:31:46');
+(15, '', '2024-02-27 18:31:36', '2024-02-28 19:02:21'),
+(16, '', '2024-02-28 19:04:11', '2024-02-28 19:04:17');
 
 -- --------------------------------------------------------
 
@@ -121,7 +125,8 @@ INSERT INTO `users` (`id`, `nickname`, `login`, `password`, `createdAt`, `update
 (11, 'boulder', '123', '$2a$15$JJjXesGfb9dQmM/daLl9Le/MIROK33d5ji4DXtmfqStKtixUeo6a6', '2024-02-21 21:02:01', '2024-02-21 21:02:01'),
 (12, 'nir4y', '1234', '$2a$15$qWIt5ueC/oN2G2FnBnarSegUlZUxvORh/5xyLa60jtPbGXlaiEB1a', '2024-02-21 21:02:26', '2024-02-21 21:02:26'),
 (13, '123122', '1231', '$2a$15$TBLT/utbJnMR79Tg8cs7WemoOE0dnjGl5ayLW5SdC2R.izyUlL77W', '2024-02-27 18:02:54', '2024-02-27 18:02:54'),
-(15, 'undefined', '1212', '$2a$15$/709M41Z3fWemW.8aG0qe.d9eJpYBtvdoIr8RoPKivmo4PKMFd8Q2', '2024-02-27 18:31:36', '2024-02-27 18:31:36');
+(15, 'undefined', '1212', '$2a$15$/709M41Z3fWemW.8aG0qe.d9eJpYBtvdoIr8RoPKivmo4PKMFd8Q2', '2024-02-27 18:31:36', '2024-02-27 18:31:36'),
+(16, 'undefined', '123123', '$2a$15$IR8NPjk6ZJNoeiyWF9/m2.vDi2lopx1lNRZIM7HNckl60CnfkH7gq', '2024-02-28 19:04:11', '2024-02-28 19:04:11');
 
 --
 -- Триггеры `users`
@@ -146,7 +151,7 @@ ALTER TABLE `activity`
 -- Индексы таблицы `chats`
 --
 ALTER TABLE `chats`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`chatid`);
 
 --
 -- Индексы таблицы `users`
@@ -162,13 +167,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `chats`
 --
 ALTER TABLE `chats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `chatid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

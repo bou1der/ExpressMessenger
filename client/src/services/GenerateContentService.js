@@ -19,7 +19,7 @@ const getMessages = async (userId,nickname,setMessages) =>{
         messagesStore.name = nickname
     }
     messagesStore.setLoadState(false)
-    const res = await api.get('/content/messages')
+    const res = await api.post('/content/messages',{chatId:messagesStore.id})
     if (!res.status === 200){
         return
     }

@@ -29,6 +29,8 @@ const UserMessages = observer(() => {
         }
         fetchData()
     }, [])
+    console.log(users)
+    console.log(messages)
     return (
         <div className="content">
             <article className="userMesseges">
@@ -36,7 +38,7 @@ const UserMessages = observer(() => {
                     users.map((user) => {
                         return (
                             <>
-                                <User key={user.id}  id={user.id} nickname={user.nickname} setMessages={setMessages} getMessages={getMessages}/>
+                                <User key={user.chatid}  id={user.chatid} nickname={user.nickname} setMessages={setMessages} getMessages={getMessages}/>
                                 <div key={uuidv4()} className={"separator"}></div>
                             </>
                         )

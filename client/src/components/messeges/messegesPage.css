@@ -136,6 +136,8 @@ overflow: hidden;
 .user_info_block h3
 {
     margin: 0px;
+
+    max-width: none;
 }
 .user_info_block span p 
 {
