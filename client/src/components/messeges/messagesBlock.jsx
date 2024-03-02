@@ -4,13 +4,15 @@ import SendFilesButtonSrc from "./resource/send_files.svg";
 import SendMessageButtonSrc from "./resource/send_messege.svg";
 
 import MessagesStore from '../../stores/MessagesStore.js';
+import webSock from "../../services/webSock.js";
 
 function messagesBlock({yourId,sendMessage,nickname,messages,setMessages}){
     const [txtMessage,setTxtMessage] = React.useState('')
-    // const [messages,setMessages] = React.useState([])
-    // React.useEffect(()=>{
-    //     setMessages(messageReq.data)
-    // },[])
+    React.useEffect(()=>{
+        setMessages(MessagesStore.messages)
+    },[])
+
+    console.log("render")
     return(
         <>
             <DialogInfo nickname={nickname}/>
@@ -35,7 +37,7 @@ function messagesBlock({yourId,sendMessage,nickname,messages,setMessages}){
                 <div className="inputMessenge"><textarea value={txtMessage} onChange={(el) =>{
                     setTxtMessage(el.target.value)}} placeholder="Write a messege......"></textarea></div>
                 <button onClick={() =>{
-                    sendMessage(setMessages,messages,txtMessage,yourId,MessagesStore.id)
+                    sendMessage(txtMessage,yourId,setMessages,messages)
                 }}><img src={SendMessageButtonSrc}  alt=""/></button>
             </span>
         </>

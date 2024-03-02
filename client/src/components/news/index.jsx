@@ -1,20 +1,24 @@
 import React from "react";
-import './news.css'
-const NewsPage = () => {
+import './news.css';
+import Post from "./components/post";
+// src
+
+// src
+const NewsPage = ({}) => {
+    const arr = [0,1,2,3,4,5,6,7]
     return(
         <>
             <div className="mainBlock">
-                <div className="isPost">
-                    <span className="postInfo">
-                        <div>
-                                <img src="" alt="" />
-                            <div>
-                                <h4>Post_author</h4>
-                                <p>post_date</p>
-                            </div>
-                        </div>
-                    </span>
-                </div>
+                {
+                    arr.map(el =>{
+                        return(
+                            <>
+                                <Post key={el}/>
+                                <div className="Separator"></div>
+                            </>
+                        )
+                    })
+                }
             </div>
         </>
     )

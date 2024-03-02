@@ -23,10 +23,6 @@ const messages = SequelizeConnect.define('messages',{
     fromUser:{
         type:DataTypes.INTEGER,
         allowNull:false
-    },
-    toUser:{
-        type:DataTypes.INTEGER,
-        allowNull:false,
     }
 })
 

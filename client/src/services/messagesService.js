@@ -1,10 +1,11 @@
 import webSock from "./webSock.js";
+import MessagesStore from "../stores/MessagesStore.js";
 
-const sendMessage = (setMessages,messages,text,sender,sendTo) =>{
-    webSock.ws.send(JSON.stringify({text,from:sender,to:sendTo}))
-    const addMessage = {chatid:12,text:text,from:sender,to:sendTo}
+
+const sendMessage = (text,sender,setMessages,messages) =>{
+    webSock.ws.send(JSON.stringify({chatid:MessagesStore.chatid,text,from:sender}))
+    const addMessage = {chatid:MessagesStore.chatid,text:text,from:sender,error:false}
     setMessages([...messages,addMessage])
-    console.log(messages)
 }
 
 

@@ -42,10 +42,10 @@ const register = async (registerValue) =>{
 const logout = () =>{
     api.post('/auth/logout').then(res => {
         if(res.status === 200){
-            localStorage.removeItem('token')
             routerStore.setAuht(false)
             WebSock.closeSock()
         }
+        localStorage.removeItem('token')
     }).catch(err => {
         console.log(err)
     })

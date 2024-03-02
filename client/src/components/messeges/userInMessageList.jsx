@@ -1,9 +1,10 @@
 import React from "react";
 import userLogo from './resource/user_logo.svg'
+import MessagesStore from "../../stores/MessagesStore.js";
 
-export const User = ({id,nickname,getMessages,setMessages}) =>{
+export const User = ({chatid,nickname}) =>{
     return(
-        <div className="user" onClick={() =>{getMessages(id,nickname,setMessages)}}>
+        <div className="user" onClick={() =>{MessagesStore.isSelected(chatid,nickname)}}>
             <img src={userLogo} alt=""/>
                 <div className="user_info">
                     <h3>{nickname}</h3>

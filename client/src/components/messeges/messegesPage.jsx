@@ -7,16 +7,19 @@ import {observer} from "mobx-react-lite";
 import {v4 as uuidv4} from 'uuid'
 //services
 import {sendMessage} from "../../services/messagesService.js";
-import {getChats,getMessages} from "../../services/GenerateContentService.js";
+import {getChats} from "../../services/GenerateContentService.js";
 import messagesStore from "../../stores/MessagesStore.js"
+
+import webSock from "../../services/webSock.js";
 
 // services
 
 const UserMessages = observer(() => {
-
+    const [messages,setMessages] = React.useState([])
     const [users, setUsers] = React.useState(undefined)
     const [id,setId] =React.useState(undefined)
-    const [messages, setMessages] = React.useState([])
+    webSock.messageEventSocket(messages,setMessages)
+
     React.useEffect( () => {
         const fetchData = async () => {
             const res = await getChats()
@@ -29,8 +32,6 @@ const UserMessages = observer(() => {
         }
         fetchData()
     }, [])
-    console.log(users)
-    console.log(messages)
     return (
         <div className="content">
             <article className="userMesseges">
@@ -38,7 +39,7 @@ const UserMessages = observer(() => {
                     users.map((user) => {
                         return (
                             <>
-                                <User key={user.chatid}  id={user.chatid} nickname={user.nickname} setMessages={setMessages} getMessages={getMessages}/>
+                                <User key={user.chatid}  chatid={user.chatid} nickname={user.nickname}/>
                                 <div key={uuidv4()} className={"separator"}></div>
                             </>
                         )
@@ -47,7 +48,7 @@ const UserMessages = observer(() => {
             </article>
             <article className="blockMesseges">
                 {messagesStore.Selected ?
-                    messagesStore.loadState? <MessagesBlock yourId={id} sendMessage={sendMessage} messages={messages} setMessages={setMessages} nickname={messagesStore.name}/> : <div>Анимация загрузки</div>
+                    messagesStore.loadState? <MessagesBlock messages={messages} setMessages={setMessages} yourId={id} sendMessage={sendMessage} nickname={messagesStore.name}/> : <div>Анимация загрузки</div>
 
                     :
                     <h1>Выберите диалог</h1>}

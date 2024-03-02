@@ -1,26 +1,38 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable,action,runInAction} from "mobx";
+import api from "../http/serviceAxios.js";
 
 class MessagesStore{
-    id;
+    chatid;
+    userid;
     name;
     activity;
-    messages;
+    messages = [];
     Selected = false;
     loadState;
-    constructor(id,nickname) {
+    constructor() {
         makeAutoObservable(this)
-        this.id = id;
-        this.name = nickname
     }
-    isSelected(state){
-        if (state){
-            return this.Selected = state
+    async isSelected(chatId,nickname){
+        if (this.chatid === chatId){
+
+            this.Selected = !this.Selected
+            return
         }
-        this.Selected = !this.Selected
-        console.log(this.Selected)
+        this.Selected = true
+        this.loadState = false
+
+        this.chatid = chatId
+        const messages = await api.post('/content/messages',{chatId})
+        this.messages = messages.data
+        this.name = nickname
+
+
+        this.loadState = true
     }
-    setLoadState(state){
-        this.loadState = state
+    Message(message){
+        const mes = this.messages
+        mes.push(message)
+        this.messages = mes
     }
 }
 export default new MessagesStore

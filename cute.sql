@@ -75,7 +75,7 @@ INSERT INTO `chats` (`chatid`, `name`, `users`, `isGroup`, `createdAt`, `updated
 CREATE TABLE `messages` (
   `messageId` int(11) NOT NULL,
   `chatId` int(11) NOT NULL,
-  `text` text DEFAULT ' ',
+  `text` text,
   `sendTime` timestamp NOT NULL DEFAULT current_timestamp(),
   `fromUser` int(11) NOT NULL,
   `toUser` int(11) NOT NULL,

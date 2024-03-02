@@ -9,7 +9,8 @@ module.exports.onConnection = onConnection = (io, clients) =>{
         socket.on('message', (message)=>{
             console.log(message)
             socket.send('message')
-            io.to(socket.id).emit('message',"this is test")
+            // io.to(socket.id).emit('message',"this is test")
+            io.emit("message",message)
         })
 
         socket.on('end', ()=>{
@@ -23,7 +24,7 @@ module.exports.onConnection = onConnection = (io, clients) =>{
         // io.sockets.socket(socket).emit('message', 'test')
         socket.on('disconnect', () =>{
             console.log("---------------Клиент отключился---------------");
-            
+            console.log(socket.id)
             clients = clients.filter(el =>{
                 return el !== socket.id 
             })

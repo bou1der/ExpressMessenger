@@ -40,11 +40,9 @@ module.exports.getMessages = async (req,res)=>{
             chatid:mess.dataValues.chatId,
             text:mess.dataValues.text,
             from:mess.dataValues.fromUser,
-            to:mess.dataValues.toUser,
             sendTime:mess.dataValues.sendTime
         })
     })
-    console.log(messages)
     res.status(200).json(messages)
 
 }

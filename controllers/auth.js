@@ -68,6 +68,7 @@ module.exports.register = async function register (req,res){
 module.exports.refreshToken = async function refresh(req,res) {
     try {
         const {refreshToken} = req.cookies
+        console.log(refreshToken)
         if (!refreshToken){return res.status(404).json({message:"Empty token"})}
         const userData = await ServiceToken.verifyRefreshToken(refreshToken)
         const tokenFromDb = await Token.findOne({where:{refreshToken:refreshToken}})
