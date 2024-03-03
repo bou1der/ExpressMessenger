@@ -16,6 +16,8 @@ import loadingGif from "./components/sign-up-in/resource/loading.gif"
 import {refresh}  from "./services/authService.js"
 import routerStore from "./stores/store.js"
 import {observer} from "mobx-react-lite";
+import socketIo from "socket.io-client";
+
 
 
 const checkUserValidation = async () => {
@@ -31,16 +33,18 @@ const checkUserValidation = async () => {
     }
 };
 
+const socket = socketIo.connect("http://localhost:8000")
 
 const Router = observer(() => {
 
-
     if (routerStore.state) {
+
+
     return(
         <BrowserRouter>
             <NavBar/>
             <Routes>
-                <Route path={"/messages"} element={<Messages/>}/>
+                <Route path={"/messages"} element={<Messages socket={socket}/>}/>
                 <Route path={"/profile"} element={<Profile/>}/>
                 <Route path={"/news"} element={<News/>}/>
                 <Route path={"/friends"} element={<Friends/>}/>

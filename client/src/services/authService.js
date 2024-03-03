@@ -1,7 +1,7 @@
 import axios from "axios";
 import api from "../http/serviceAxios.js";
 import routerStore from "../stores/store.js";
-import WebSock from "./webSock.js"
+// import WebSock from "./webSock.js"
 
 
 const login = async (loginValue) =>{
@@ -14,7 +14,6 @@ const login = async (loginValue) =>{
     }).then((res) => {
         if (res.status === 200) {
             routerStore.setAuht(true)
-            WebSock.connectSock()
         }
         console.log(res);
     }).catch((err)=> {console.log(err)})
@@ -31,7 +30,6 @@ const register = async (registerValue) =>{
         console.log(res)
         if (res.status === 200){
             routerStore.setAuht(true)
-            WebSock.connectSock()
         }
     }).catch((err)=>
         {
@@ -43,7 +41,6 @@ const logout = () =>{
     api.post('/auth/logout').then(res => {
         if(res.status === 200){
             routerStore.setAuht(false)
-            WebSock.closeSock()
         }
         localStorage.removeItem('token')
     }).catch(err => {
@@ -54,11 +51,8 @@ const refresh = async () =>{
     try{
         const res = await axios.get('http://localhost:8000/api/auth/refresh',{withCredentials:true})
         if(res.status === 200){
-            WebSock.connectSock()
+            localStorage.setItem('token',res.data.accessToken)
         }
-        console.log(res)
-        localStorage.setItem('token',res.data.accessToken)
-   
     }catch (e){
         console.log(e.config?.response?.message)
     }

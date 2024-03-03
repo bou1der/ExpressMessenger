@@ -6,19 +6,18 @@ import {observer} from "mobx-react-lite";
 
 import {v4 as uuidv4} from 'uuid'
 //services
-import {sendMessage} from "../../services/messagesService.js";
 import {getChats} from "../../services/GenerateContentService.js";
 import messagesStore from "../../stores/MessagesStore.js"
 
-import webSock from "../../services/webSock.js";
+// import webSock from "../../services/webSock.js";
 
 // services
 
-const UserMessages = observer(() => {
+const UserMessages = observer(({socket}) => {
     const [messages,setMessages] = React.useState([])
     const [users, setUsers] = React.useState(undefined)
     const [id,setId] =React.useState(undefined)
-    webSock.messageEventSocket(messages,setMessages)
+    // webSock.messageEventSocket(messages,setMessages)
 
     React.useEffect( () => {
         const fetchData = async () => {
@@ -48,7 +47,7 @@ const UserMessages = observer(() => {
             </article>
             <article className="blockMesseges">
                 {messagesStore.Selected ?
-                    messagesStore.loadState? <MessagesBlock messages={messages} setMessages={setMessages} yourId={id} sendMessage={sendMessage} nickname={messagesStore.name}/> : <div>Анимация загрузки</div>
+                    messagesStore.loadState? <MessagesBlock socket={socket} messages={messages} setMessages={setMessages} yourId={id} nickname={messagesStore.name}/> : <div>Анимация загрузки</div>
 
                     :
                     <h1>Выберите диалог</h1>}

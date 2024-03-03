@@ -16,6 +16,8 @@ module.exports.getChats = async function getChats(req,res){
             arr.push({chatid:el.chatid,nickname:name,usersid,isGroup: el.isGroup})
         })
         let i = 0;
+
+        // Переделать findAll
         for (i;i < arr.length; i++){
             if (!arr[i].isGroup){
                 const otherid = arr[i].usersid.filter(el => el != req.user.id)
@@ -24,6 +26,7 @@ module.exports.getChats = async function getChats(req,res){
                 arr[i].nickname = "Anonymous group"
             }
         }
+        //
     });
     if (!arr.length){
         res.status(404).json({chats:"none"})

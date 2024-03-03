@@ -7,8 +7,8 @@ module.exports.onConnection = onConnection = (io, clients) =>{
         clients.push(socket.id);
 
         socket.on('message', (message)=>{
+            // socket.send('message')
             console.log(message)
-            socket.send('message')
             // io.to(socket.id).emit('message',"this is test")
             io.emit("message",message)
         })
