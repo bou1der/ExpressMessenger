@@ -1,3 +1,5 @@
+const Chats = require("../../models/chats");
+const {Sequelize} = require("sequelize");
 module.exports.onConnection = onConnection = (io, clients) =>{
 
     io.on('connection', (socket) =>{
@@ -7,10 +9,8 @@ module.exports.onConnection = onConnection = (io, clients) =>{
         clients.push(socket.id);
 
         socket.on('message', (message)=>{
-            // socket.send('message')
             console.log(message)
-            // io.to(socket.id).emit('message',"this is test")
-            io.emit("message",message)
+            io.to(`${message.chatid}`).emit('message',message)
         })
 
         socket.on('end', ()=>{
@@ -20,6 +20,20 @@ module.exports.onConnection = onConnection = (io, clients) =>{
             console.log(clients)
             socket.disconnect() 
             return;
+        })
+        socket.on('chats:joinRooms', async (id) =>{
+            const chats = await Chats.findAll({
+                where: Sequelize.literal(`JSON_CONTAINS(json_unquote(json_extract(users, '$.usersId')), '${id}')`),
+                raw:true
+            })
+            console.log(chats)
+            if (!chats.length){
+                socket.emit('error',"Undefined chats")
+                return;
+            }
+            chats.map(chat =>{
+                socket.join(`${chat.chatid}`)
+            })
         })
         // io.sockets.socket(socket).emit('message', 'test')
         socket.on('disconnect', () =>{

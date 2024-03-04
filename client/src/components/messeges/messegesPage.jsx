@@ -14,6 +14,7 @@ import messagesStore from "../../stores/MessagesStore.js"
 // services
 
 const UserMessages = observer(({socket}) => {
+
     const [messages,setMessages] = React.useState([])
     const [users, setUsers] = React.useState(undefined)
     const [id,setId] =React.useState(undefined)
@@ -25,15 +26,18 @@ const UserMessages = observer(({socket}) => {
             if (res.status === 200) {
                 setUsers(res.data[0])
                 setId(res.data[1])
+                socket.emit('chats:joinRooms',res.data[1])
                 return;
             }
 
         }
         fetchData()
+
     }, [])
     return (
         <div className="content">
             <article className="userMesseges">
+                {/*<button style={{width:"100px",height:"20px"}} onClick={undefined}></button>*/}
                 {users &&
                     users.map((user) => {
                         return (

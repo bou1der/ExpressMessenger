@@ -7,26 +7,21 @@ import MessagesStore from '../../stores/MessagesStore.js';
 // import webSock from "../../services/webSock.js";
 function messagesBlock({yourId,nickname,messages,setMessages,socket}){
     const [txtMessage,setTxtMessage] = React.useState('')
-    socket.on('message', mess =>{
-        console.log(mess)
-        setMessages([...messages,mess])
-    })
-
     React.useEffect(()=>{
-        setMessages(MessagesStore.messages)
-    },[])
+        setMessages(MessagesStore.messages);
+        socket.on('message', mess => {
+            console.log(mess)
+            setMessages(prevMessages => [...prevMessages, mess])
+        })
+        return () => {
+            socket.off('message')
+        }
+    }, [socket, setMessages])
 
     const handleSend = () =>{
-        socket.send({chatid: MessagesStore.chatid, text: txtMessage,from:yourId})
-        const addMessage = {chatid:MessagesStore.chatid,text:txtMessage,from:yourId,error:false}
-        // console.log(addMessage)
-        // console.log(messages)
-        // setMessages([...messages,addMessage])
-        // console.log(messages)
+        socket.emit("message",{chatid: MessagesStore.chatid, text: txtMessage,from:yourId})
+        setTxtMessage('')
     }
-
-    console.log("render")
-    console.log(messages)
     return(
         <>
             <DialogInfo nickname={nickname}/>
