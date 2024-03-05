@@ -24,7 +24,7 @@
 .postInfo{
     margin-top: 30px;
     display: flex;
-    flex-flow: row;
+    flex-flow: row wrap;
     justify-content: space-between;
 }
 .Post-Creater-Info{
@@ -124,3 +124,31 @@
     margin-top: 40px;
     margin-bottom: 40px;
 }
+.Post-Img-Container{
+    width: 100%;
+    /*display: flex;*/
+    /*flex-flow: row wrap;*/
+    /*gap: 10px;*/
+    /*justify-content: center;*/
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    grid-template-rows: 1fr 0.5fr;
+    grid-row-gap: 8px;
+
+    margin-bottom: 30px ;
+}
+.Post-Img-Container img{
+    object-fit: contain;
+    max-width: 320px;
+}
+.First-Row-Images-Post{
+    width: 100%;
+    height: 100%;
+
+    /*max-width: 320px;*/
+}
+/*.Second-Row-Images-Post{*/
+/*    max-width: 100px;*/
+/*}*/

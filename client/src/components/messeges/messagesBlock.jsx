@@ -17,9 +17,8 @@ function messagesBlock({yourId,nickname,messages,setMessages,socket}){
             socket.off('message')
         }
     }, [socket, setMessages])
-
     const handleSend = () =>{
-        socket.emit("message",{chatid: MessagesStore.chatid, text: txtMessage,from:yourId})
+        socket.emit("message",{chatid:MessagesStore.chatid,text: txtMessage,from:yourId})
         setTxtMessage('')
     }
     return(

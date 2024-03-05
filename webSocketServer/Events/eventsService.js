@@ -1,5 +1,6 @@
 const Chats = require("../../models/chats");
-const {Sequelize} = require("sequelize");
+const MessagesModel = require("../../models/messages-model")
+const {Sequelize, where} = require("sequelize");
 module.exports.onConnection = onConnection = (io, clients) =>{
 
     io.on('connection', (socket) =>{
@@ -8,9 +9,18 @@ module.exports.onConnection = onConnection = (io, clients) =>{
 
         clients.push(socket.id);
 
-        socket.on('message', (message)=>{
-            console.log(message)
-            io.to(`${message.chatid}`).emit('message',message)
+        socket.on('message', async (message)=>{
+            try{
+
+                console.log(message)
+                const result =  await MessagesModel.create({chatId:message.chatid,text:message.text,fromUser:message.from})
+                io.to(`${message.chatid}`).emit('message',message)
+
+            }catch (e) {
+                socket.emit('message',{chatid:message.chatid,text:message.text,from:message.from,error:true})
+                socket.emit('error', e)
+            }
+
         })
 
         socket.on('end', ()=>{

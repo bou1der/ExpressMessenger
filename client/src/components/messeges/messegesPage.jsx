@@ -8,9 +8,6 @@ import {v4 as uuidv4} from 'uuid'
 //services
 import {getChats} from "../../services/GenerateContentService.js";
 import messagesStore from "../../stores/MessagesStore.js"
-
-// import webSock from "../../services/webSock.js";
-
 // services
 
 const UserMessages = observer(({socket}) => {
@@ -18,8 +15,6 @@ const UserMessages = observer(({socket}) => {
     const [messages,setMessages] = React.useState([])
     const [users, setUsers] = React.useState(undefined)
     const [id,setId] =React.useState(undefined)
-    // webSock.messageEventSocket(messages,setMessages)
-
     React.useEffect( () => {
         const fetchData = async () => {
             const res = await getChats()
